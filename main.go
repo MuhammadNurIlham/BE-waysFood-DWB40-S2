@@ -2,6 +2,8 @@ package main
 
 import (
 	"backend/database"
+	"os"
+
 	// "backend/handlers"
 	"backend/pkg/mysql"
 	"backend/routes"
@@ -38,7 +40,7 @@ func main() {
 	var AllowedMethods = handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS", "PATCH", "DELETE"})
 	var AllowedOrigins = handlers.AllowedOrigins([]string{"*"})
 
-	var port = "5000"
-	fmt.Println("Server Running Localhost:" + port)
-	http.ListenAndServe("localhost:"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
+	var port = os.Getenv("PORT")
+	fmt.Println("server running localhost:" + port)
+	http.ListenAndServe(":"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
 }
